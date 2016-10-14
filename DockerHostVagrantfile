@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/trusty64"
+
+  # Getting rid of "stdin: is not a tty" error
+  config.vm.provision "fix-no-tty", type: "shell" do |s|
+    s.privileged = false
+    s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
+  end
+
+  # use local ubuntu mirror
+  # Note: sometimes local mirror may not be updated, if you get Hash mismatch error, comment the followings out
+  #config.vm.provision :shell, inline: "sed -i 's/http:\\/\\/archive.ubuntu.com\\/ubuntu/mirror:\\/\\/mirrors.ubuntu.com\\/mirrors.txt/g' /etc/apt/sources.list"
+  #config.vm.provision :shell, inline: "sed -i 's/http:\\/\\/security.ubuntu.com\\/ubuntu/mirror:\\/\\/mirrors.ubuntu.com\\/mirrors.txt/g' /etc/apt/sources.list"
+  # add swap
+  config.vm.provision :shell, inline: "fallocate -l 4G /swapfile && chmod 0600 /swapfile && mkswap /swapfile && swapon /swapfile && echo '/swapfile none swap sw 0 0' >> /etc/fstab"
+  config.vm.provision :shell, inline: "echo vm.swappiness = 10 >> /etc/sysctl.conf && echo vm.vfs_cache_pressure = 50 >> /etc/sysctl.conf && sysctl -p"
+
+  config.vm.provision "shell", inline:
+    "ps aux | grep 'sshd:' | awk '{print $2}' | xargs kill"
+  config.vm.hostname = "local.practera.com"
+
+  config.vm.provision :docker
+  config.vm.network :private_network, ip: "192.168.99.100"
+  # Set up aws cli
+  config.vm.provision :shell, inline: "sudo apt-get install -y python-pip; sudo pip install awscli; aws --version"
+  config.vm.provision :shell, inline: "ln -s /vagrant/docker/develop/vagrant/.aws ~/.aws"
+  config.vm.provision :shell, inline: "`aws ecr get-login --region ap-southeast-2`"
+  config.vm.define "Practera Docker Host"
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    vb.gui = false
+    vb.name = "Practera Docker Host"
+    # Customize the amount of memory on the VM:
+    vb.memory = 3072
+  end
+  config.vm.provision :shell, inline: "echo "
+  config.vm.provision :shell, inline: "echo Practera Docker host and containers are set up successfully. Ensure that database.php and local.php are set up correctly."
+  config.vm.provision :shell, inline: "echo Go to http://192.168.99.100/ to view web. SSH to practera-web by using ./vagrant-practera"
+end
