@@ -39,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        d.link("postgres:postgres")
        d.link("redis:redis")
        d.has_ssh = true
-       d.create_args = ["--volumes-from=data"]
+       d.create_args = ["--dns=8.8.8.8", "--dns=8.8.4.4", "--volumes-from=data"]
      end     
    end
 
