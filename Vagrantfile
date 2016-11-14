@@ -13,12 +13,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 ######data######
 
-   config.vm.define "data" do |v|             ### Name of VM
+   config.vm.define "data" do |v|             ### VM's Name
      v.vm.provider "docker" do |d|
        d.vagrant_machine = "#{DOCKER_HOST_NAME}"
        d.vagrant_vagrantfile = "#{DOCKER_HOST_VAGRANTFILE}"
-       d.name = "practera-data"               ### Name of Container
-       d.remains_running = false
+       d.name = "practera-data"               ### Container's Name
+       d.remains_running = false              ### Turn this to true only if there exist commands maintaining in running state.
        d.build_dir = "docker/develop/data"    ### The path of data
 #       d.build_args = ["-t=data"]            ### Tag
      end
@@ -27,12 +27,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 ######postgres######
 
-   config.vm.define "postgres" do |v|
+   config.vm.define "postgres" do |v|         ### VM's Name
      v.vm.provider "docker" do |d|
        d.vagrant_machine = "#{DOCKER_HOST_NAME}"
        d.vagrant_vagrantfile = "#{DOCKER_HOST_VAGRANTFILE}"
-       d.name = "practera-postgres"       
-       d.remains_running = true
+       d.name = "practera-postgres"           ### Container's Name       
+       d.remains_running = true               ### Turn this to true only if there exist commands maintaining in running state.
        d.image = "postgres:9.4"
 #       d.build_args = ["-t=postgres"]
        d.ports = ["5432:5432"]
@@ -47,12 +47,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 ######redis#####
 
-   config.vm.define "redis" do |v|
+   config.vm.define "redis" do |v|             ### VM's Name
      v.vm.provider "docker" do |d|
        d.vagrant_machine = "#{DOCKER_HOST_NAME}"
        d.vagrant_vagrantfile = "#{DOCKER_HOST_VAGRANTFILE}"
-       d.name = "practera-redis"       
-       d.remains_running = true
+       d.name = "practera-redis"              ### Container's Name  
+       d.remains_running = true               ### Turn this to true only if there exist commands maintaining in running state.
        d.image = "redis"
 #       d.build_args = ["-t=redis"]
      end
@@ -60,12 +60,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 ######web######
 
-   config.vm.define "web" do |v|
+   config.vm.define "web" do |v|             ### VM's Name
      v.vm.provider "docker" do |d|
        d.vagrant_machine = "#{DOCKER_HOST_NAME}"
        d.vagrant_vagrantfile = "#{DOCKER_HOST_VAGRANTFILE}"
-       d.name = "practera-web"       
-       d.remains_running = true
+       d.name = "practera-web"               ### Container's Name       
+       d.remains_running = true              ### Turn this to true only if there exist commands maintaining in running state.
        d.image = "350544449840.dkr.ecr.ap-southeast-2.amazonaws.com/practera/develop:latest"
 #       d.build_args = ["-t=web"]
        d.ports = ["80:80"]
@@ -85,11 +85,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 #####analytics#####
 
-   config.vm.define "analytics" do |v|
+   config.vm.define "analytics" do |v|             ### VM's Name
      v.vm.provider "docker" do |d|
        d.vagrant_machine = "#{DOCKER_HOST_NAME}"
        d.vagrant_vagrantfile = "#{DOCKER_HOST_VAGRANTFILE}"
-       d.name = "practera-analytics"       
+       d.name = "practera-analytics"               ### Container's Name       
        d.remains_running = true
        d.image = "350544449840.dkr.ecr.ap-southeast-2.amazonaws.com/practera/analytics:latest"
 #       d.build_args = ["-t=analytics"]
