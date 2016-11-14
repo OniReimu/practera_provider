@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        d.vagrant_machine = "#{DOCKER_HOST_NAME}"
        d.vagrant_vagrantfile = "#{DOCKER_HOST_VAGRANTFILE}"
        d.name = "practera-data"               ### Name of Container
-       d.remains_running = true
+       d.remains_running = false
        d.build_dir = "docker/develop/data"    ### The path of data
 #       d.build_args = ["-t=data"]            ### Tag
      end
