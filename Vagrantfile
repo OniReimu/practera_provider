@@ -23,6 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 #       d.build_args = ["-t=data"]            ### Tag
      end
      v.vm.synced_folder ".", "/app"           ### sync folders from the host Vagrant is running
+     v.vm.synced_folder "../pgdata", "/pgdate"   
    end
 
 ######postgres######
