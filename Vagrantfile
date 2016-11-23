@@ -7,7 +7,7 @@ DOCKER_HOST_NAME = "Practera Docker Host"
  
 DOCKER_HOST_VAGRANTFILE = "./DockerHostVagrantfile" 
 
-
+mytoken = `aws ecr get-authorization-token --output text --query authorizationData[].authorizationToken | base64 -D | cut -d: -f2`
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 #       d.build_args = ["-t=data"]            ### Tag
      end
      v.vm.synced_folder ".", "/app"           ### sync folders from the host Vagrant is running
-     v.vm.synced_folder "../pgdata", "/pgdate"   
+#    v.vm.synced_folder "../pgdata", "/pgdata"
    end
 
 ######postgres######
@@ -77,6 +77,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        d.has_ssh = true
 
        d.create_args = ["--dns=8.8.8.8", "--dns=8.8.4.4", "--volumes-from=practera-data"]
+       d.email = "reimusaber@gmail.com"
+       d.username = "AWS"
+       d.password = mytoken
+       d.auth_server = "350544449840.dkr.ecr.ap-southeast-2.amazonaws.com"
      end
    end
 
@@ -98,6 +102,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        d.link("practera-postgres:practera-postgres")
 #       d.has_ssh = true
        d.create_args = ["--volumes-from=practera-data"]
+       d.email = "reimusaber@gmail.com"
+       d.username = "AWS"
+       d.password = mytoken
+       d.auth_server = "350544449840.dkr.ecr.ap-southeast-2.amazonaws.com"
      end
    end
 end

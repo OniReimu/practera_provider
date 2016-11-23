@@ -5,6 +5,7 @@ Vagrant.configure("2") do |config|
 
   #config.vm.box = "ubuntu/trusty64"
   config.vm.box = "phusion/ubuntu-14.04-amd64"
+  config.vm.synced_folder "./docker/develop/vagrant/.aws/", "/home/vagrant/.aws"
 
   # Only run the provisioning on the first 'vagrant up'
   if Dir.glob("#{File.dirname(__FILE__)}/.vagrant/machines/default/*/id").empty?
@@ -40,15 +41,19 @@ Vagrant.configure("2") do |config|
   config.vm.network :private_network, ip: "192.168.99.100"
   # Set up aws cli
   config.vm.provision :shell, inline: "sudo apt-get install -y python-pip; sudo pip install awscli; aws --version"
-###  config.vm.provision :shell, inline: "ln -s /vagrant/docker/develop/vagrant/.aws ~/.aws"
-###  config.vm.provision :shell, inline: "`aws ecr get-login --region ap-southeast-2`"
+  config.vm.provision :shell, inline: "sudo apt-get install -y expect"
+  config.vm.provision :shell, inline: "/vagrant/su2root.expect"
+  config.vm.provision :shell, inline: "chmod 777 /var/lib/docker" 
+
+#  config.vm.provision :shell, inline: "ln -s /vagrant/docker/develop/vagrant/.aws ~/.aws"
+#  config.vm.provision :shell, inline: "`aws ecr get-login --region ap-southeast-2`"
   config.vm.define "Practera Docker Host"
   config.vm.provider "virtualbox" do |vb|
     # Display the VirtualBox GUI when booting the machine
     vb.gui = false
     vb.name = "Practera Docker Host"
     # Customize the amount of memory on the VM:
-    vb.memory = 3072
+    vb.memory = 2048
   end
  
   # Add vagrant user to the docker group
