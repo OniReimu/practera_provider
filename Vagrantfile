@@ -83,7 +83,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        d.password = mytoken
        d.auth_server = "350544449840.dkr.ecr.ap-southeast-2.amazonaws.com"
      end
-     v.ssh.port = 22
+#     v.ssh.port = 22
 
 ### SSH-configuration, refering to ./vagrant-practera
 #     v.ssh.username = "root"
