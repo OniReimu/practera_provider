@@ -74,7 +74,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        d.link("practera-redis:practera-redis")
 
 ###Make sure sshd run in the container started, otherwise it will stick in booting state.
-       d.has_ssh = true
+#       d.has_ssh = true
+       
 
        d.create_args = ["--dns=8.8.8.8", "--dns=8.8.4.4", "--volumes-from=practera-data"]
        d.email = "reimusaber@gmail.com"
@@ -82,6 +83,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        d.password = mytoken
        d.auth_server = "350544449840.dkr.ecr.ap-southeast-2.amazonaws.com"
      end
+     v.ssh.port = 22
+
+### SSH-configuration, refering to ./vagrant-practera
+#     v.ssh.username = "root"
+#     v.ssh.password = "PASSWORD"
+#     v.ssh.private_key_path = "insecure_key"
+   
    end
 
 
