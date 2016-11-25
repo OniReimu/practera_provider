@@ -11,12 +11,14 @@ Make sure you have your aws permission files.
 
 Make sure you have your develop files in place.
 
-Make sure you have enough permission accessing with your directory
+Make sure you have enough permission accessing with your directory:
   
     $ chmod 755 -R (Directory's path)
     
-Make sure you have your 'config' and 'credentials' files in place that will be mounted inside the containers for aws authenication, that is docker/develop/vagrant/
+Make sure you have your 'config' and 'credentials' files in place that will be mounted inside the containers for aws authenication, that is docker/develop/vagrant/.aws/
 
-RUN 
+Make sure Vagrantfile, DockerHostVagratfile, su2root.expect are all under the same path as docker folder.
+
+RUN:
 
     $ vagrant up --provision --no-parallel
