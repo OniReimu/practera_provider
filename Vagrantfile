@@ -73,7 +73,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        d.link("practera-postgres:practera-postgres")
        d.link("practera-redis:practera-redis")
 
-###Make sure sshd run in the container started, otherwise it will stick in booting state.
+### Make sure sshd run in the container started, otherwise it will stick in booting state.
 #       d.has_ssh = true
        
 
